@@ -18,8 +18,14 @@ class PhoneNormalizer:
         )
 
         # Проверка на длину
-        if len(clean) < 10 or len(clean) > 12:
+        if len(clean) < 10 or len(clean) > 13:
             return False
+
+        # Проверка на международный префикс выхода "00" в начале номера с длиной 13
+        if len(clean) == 13:
+            if not clean.startswith("00"):
+                return False
+            clean = clean[2:]  # удаление '00'
 
         # Проверка на международный формат +7ХХХХХХХХХХ - на '+' в начале номера с длиной 12
         if len(clean) == 12:
